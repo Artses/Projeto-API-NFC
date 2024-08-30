@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { UpdateAlunoDto } from './dto/update-aluno.dto';
+import { Aluno } from './entities/aluno.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AlunoService {
+  constructor(
+    @InjectRepository(Aluno)
+    private alunoRepository: Repository<Aluno>
+  ){}
   create(createAlunoDto: any) {
-    return 'This action adds a new aluno';
+    return this.alunoRepository.save(createAlunoDto);
   }
 
   findAll() {
-    return `This action returns all aluno`;
+    return this.alunoRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} aluno`;
+    return this.alunoRepository.findOneBy({id});
   }
 
-  update(id: number, updateAlunoDto: UpdateAlunoDto) {
-    return `This action updates a #${id} aluno`;
+  update(id: number, updateAlunoDto: any) {
+    updateAlunoDto.id = id
+    return this.alunoRepository.save(updateAlunoDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} aluno`;
+    return this.alunoRepository.delete({id});
   }
 }

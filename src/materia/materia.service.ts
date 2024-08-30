@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMateriaDto } from './dto/create-materia.dto';
 import { UpdateMateriaDto } from './dto/update-materia.dto';
+import { Materia } from './entities/materia.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MateriaService {
+  constructor(
+    @InjectRepository(Materia)
+    private materiaRepository: Repository<Materia>
+  ){}
   create(createMateriaDto: CreateMateriaDto) {
-    return 'This action adds a new materia';
+    return this.materiaRepository.save(createMateriaDto);
   }
 
   findAll() {
-    return `This action returns all materia`;
+    return this.materiaRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} materia`;
+    return this.materiaRepository.findOneBy({id});
   }
 
-  update(id: number, updateMateriaDto: UpdateMateriaDto) {
-    return `This action updates a #${id} materia`;
+  update(id: number, updateMateriaDto: any) {
+    updateMateriaDto.id = id
+    return this.materiaRepository.save(updateMateriaDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} materia`;
+    return this.materiaRepository.delete({id});
   }
 }
