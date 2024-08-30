@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AlunoModule } from './aluno/aluno.module';
@@ -41,7 +39,5 @@ import { Materia } from './materia/entities/materia.entity';
     MateriaModule,
     ChamadaModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
