@@ -1,16 +1,16 @@
 import { Aluno } from "src/aluno/entities/aluno.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('chamada')
 export class Chamada {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: Number
 
     @CreateDateColumn()
     data: Date
 
     @ManyToOne( () => Aluno )
-    aluno: Aluno
+    aluno: Aluno["id"]
 
     @Column()
     tipoChamada: string
