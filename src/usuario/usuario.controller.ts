@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, HttpException } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -10,6 +10,21 @@ export class UsuarioController {
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuarioService.create(createUsuarioDto);
+  }
+  
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Post('login')
+  async Login(@Body() createUsuarioDto: CreateUsuarioDto) {
+    try {
+      const user = await this.usuarioService.login(createUsuarioDto.senha, createUsuarioDto.email);
+      return user; 
+    } 
+    catch (error) {
+      throw new HttpException({
+        status: HttpStatus.UNAUTHORIZED,
+        error: 'Credenciais inválidas',
+      }, HttpStatus.UNAUTHORIZED);
+    }
   }
 
   @Get()
