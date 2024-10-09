@@ -21,7 +21,7 @@ import { Materia } from './materia/entities/materia.entity';
       port: 3306,
       username: 'root',
       password: '1234',
-      database: 'pit',
+      database: 'BFP',
       synchronize: false,
       entities: [
         Usuario,

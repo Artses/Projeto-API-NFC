@@ -8,7 +8,4 @@ export class Materia {
 
     @Column()
     nome: string
-
-    @ManyToOne( () => Professor)
-    professor: Professor
 }
