@@ -12,6 +12,7 @@ import { Aluno } from './aluno/entities/aluno.entity';
 import { Professor } from './professor/entities/professor.entity';
 import { Escola } from './escola/entities/escola.entity';
 import { Materia } from './materia/entities/materia.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { Materia } from './materia/entities/materia.entity';
     EscolaModule,
     MateriaModule,
     ChamadaModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
