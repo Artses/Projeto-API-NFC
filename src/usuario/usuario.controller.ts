@@ -13,30 +13,10 @@ export class UsuarioController {
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuarioService.create(createUsuarioDto);
   }
-  
-  @HttpCode(HttpStatus.ACCEPTED)
-  @Post('login')
-  async Login(@Body() createUsuarioDto: CreateUsuarioDto) {
-    try {
-      const user = await this.usuarioService.login(createUsuarioDto.senha, createUsuarioDto.email);
-      return user; 
-    } 
-    catch (error) {
-      throw new HttpException({
-        status: HttpStatus.UNAUTHORIZED,
-        error: 'Credenciais inválidas',
-      }, HttpStatus.UNAUTHORIZED);
-    }
-  }
 
   @Get()
   findAll() {
     return this.usuarioService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usuarioService.findOne(+id);
   }
 
   @Patch(':id')
