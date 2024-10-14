@@ -12,32 +12,45 @@ import { Aluno } from './aluno/entities/aluno.entity';
 import { Professor } from './professor/entities/professor.entity';
 import { Escola } from './escola/entities/escola.entity';
 import { Materia } from './materia/entities/materia.entity';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'BFP',
-      synchronize: false,
-      entities: [
-        Usuario,
-        Aluno,
-        Professor,
-        Escola,
-        Materia,
-        Chamada
-      ],
+    // ConfigModule para carregar variáveis de ambiente de um arquivo .env
+    ConfigModule.forRoot({
+      isGlobal: true, // Torna o módulo de configuração global
     }),
+    // Configuração do TypeOrm com variáveis de ambiente
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',  // O tipo de banco de dados é MySQL
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        synchronize: false,
+        entities: [
+          Usuario,
+          Aluno,
+          Professor,
+          Escola,
+          Materia,
+          Chamada,
+        ],
+      }),
+      inject: [ConfigService],
+    }),
+    // Demais módulos
     UsuarioModule,
     AlunoModule,
     ProfessorModule,
     EscolaModule,
     MateriaModule,
     ChamadaModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

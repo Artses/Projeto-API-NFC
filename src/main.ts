@@ -1,9 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as cookieParser from "cookie-parser";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(cookieParser())
+  app.enableCors({
+    origin: "http://localhost:8080",
+    credentials:true
+  })
 
   const config = new DocumentBuilder()
     .setTitle('Chamada NFC')
@@ -14,8 +21,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('Swagger', app, document);
 
-  await app.listen(3000, () => {
-    console.log(`Server is running on port 3000`)
+  await app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`)
   });
 }
 bootstrap();
