@@ -8,17 +8,9 @@ export class UsuarioService {
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>
   ){}
-  create(createUsuarioDto: any) {
-    return this.usuarioRepository.save(createUsuarioDto);
-  }
 
   findAll() {
     return this.usuarioRepository.find();
-  }
-
-  update(id: number, updateUsuarioDto: any) {
-    updateUsuarioDto.id = id
-    return this.usuarioRepository.save(updateUsuarioDto);
   }
 
   remove(id: number) {

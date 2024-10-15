@@ -55,23 +55,29 @@ export class AuthController {
 
   @Get('User')
   async user(@Req() request: Request) {
+    try {
+      const cookie = request.cookies['jwt']
+      const data = await this.jwtService.verifyAsync(cookie)
+      
+      if(!data){
+        throw new UnauthorizedException();
+      }
+      
+      const user = await this.authService.findOneBy({ id: data['id'] });
+      const { senha, ...result } = user
 
-    const cookie = request.cookies['jwt']
-
-    const data = await this.jwtService.verifyAsync(cookie)
-
-    const user = await this.authService.findOneBy({ id: data['id'] });
-
-    const { senha, ...result } = user
-
-    return result;
+      return result;
+    }
+    catch (e) {
+      throw new UnauthorizedException();
+    }
   }
 
   @Post('Logout')
   async logout(@Res({ passthrough: true }) response: Response) {
     response.clearCookie('jwt');
 
-    return{
+    return {
       message: "Success"
     }
   }
