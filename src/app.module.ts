@@ -17,15 +17,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    // ConfigModule para carregar variáveis de ambiente de um arquivo .env
     ConfigModule.forRoot({
-      isGlobal: true, // Torna o módulo de configuração global
+      isGlobal: true,
     }),
-    // Configuração do TypeOrm com variáveis de ambiente
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',  // O tipo de banco de dados é MySQL
+        type: 'mysql',
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('DB_USERNAME'),
@@ -43,7 +41,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
-    // Demais módulos
     UsuarioModule,
     AlunoModule,
     ProfessorModule,
