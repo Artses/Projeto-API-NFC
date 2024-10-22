@@ -45,9 +45,14 @@ export class AuthController {
     if (!await bcrypt.compare(senha, user.senha)) {
       throw new BadRequestException('Email ou senha invalido')
     }
-    const jwt = await this.jwtService.signAsync({ id: user.id })
+    const token = await this.jwtService.signAsync({ id: user.id })
 
-    response.cookie("jwt", jwt, { httpOnly: true });
+    response.cookie("jwt", token, {
+      httpOnly: true,  
+      secure: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      sameSite: 'lax', 
+    });
 
     return { message: "Success" };
   };
