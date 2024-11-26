@@ -16,7 +16,7 @@ export class ChamadaController {
 
   @Get()
   findAll() {
-    return this.chamadaService.findAll();
+    return this.chamadaService.findAll()
   }
 
   @Get(':id')

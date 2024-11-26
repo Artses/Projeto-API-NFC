@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateAlunoDto {
-    @ApiProperty({example: "123"})
+    @ApiProperty({example: "Aluno"})
     nome: string; 
 }
