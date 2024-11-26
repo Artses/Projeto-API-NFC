@@ -7,6 +7,4 @@ export class CreateProfessorDto {
     escola: number;
     @ApiProperty({example: 1})
     usuario: number;
-    @ApiProperty({example: 1})
-    materia: number;
 }
