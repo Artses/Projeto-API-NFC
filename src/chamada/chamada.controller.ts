@@ -15,7 +15,7 @@ export class ChamadaController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.chamadaService.findAll()
   }
 

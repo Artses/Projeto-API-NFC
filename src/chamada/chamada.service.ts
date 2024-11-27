@@ -16,8 +16,24 @@ export class ChamadaService {
     return this.chamadaRepository.save(createChamadaDto);
   }
 
-  findAll() {
-    return this.chamadaRepository.find();
+  async findAll() {
+    const chamadas = await this.chamadaRepository.createQueryBuilder('chamada')
+    .leftJoinAndSelect('chamada.aluno', 'aluno')
+    .select([
+      'chamada.id',
+      'chamada.data',
+      'chamada.tipoChamada',
+      'aluno.id',
+      'aluno.nome' // Seleciona apenas o ID de `aluno`
+    ])
+    .getMany();
+    return chamadas.map((chamada) => ({
+      id: chamada.id,
+      aluno: (chamada as any).aluno?.id,
+      nome: (chamada as any).aluno?.nome,// Converte para `any` para evitar o erro de tipagem
+      data: chamada.data,
+      tipoChamada: chamada.tipoChamada,
+    }));
   }
 
   findOne(id: number) {
