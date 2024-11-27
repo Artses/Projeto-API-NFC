@@ -24,6 +24,11 @@ export class ChamadaController {
     return this.chamadaService.findOne(+id);
   }
 
+  @Get('Aluno/:alunoId')
+  async findByAlunoId(@Param('alunoId') alunoId: string) {
+    return this.chamadaService.findOneByAlunoId(+alunoId);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateChamadaDto: UpdateChamadaDto) {
     return this.chamadaService.update(+id, updateChamadaDto);

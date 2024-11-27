@@ -1,5 +1,4 @@
 import { Aluno } from "src/aluno/entities/aluno.entity";
-import { Materia } from "src/materia/entities/materia.entity";
 import { Professor } from "src/professor/entities/professor.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 
